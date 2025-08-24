@@ -13,6 +13,8 @@ import mods.railcraft.client.gui.GuiBookRoutingTable;
 import mods.railcraft.client.particles.ParticlePumpkin;
 import mods.railcraft.client.particles.ParticleSpark;
 import mods.railcraft.client.render.carts.*;
+import mods.railcraft.client.render.models.programmatic.locomotives.ModelLocomotiveDiesel;
+import mods.railcraft.client.render.models.programmatic.locomotives.ModelLocomotiveElectric;
 import mods.railcraft.client.render.models.programmatic.locomotives.ModelLocomotiveSteamSolid;
 import mods.railcraft.client.render.models.resource.*;
 import mods.railcraft.client.render.tesr.*;
@@ -48,6 +50,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -169,7 +172,8 @@ public class ClientProxy extends CommonProxy implements ISelectiveResourceReload
 //        LocomotiveRenderType.STEAM_SOLID.registerRenderer(new LocomotiveRendererDefault("railcraft:magic", "locomotive.model.steam.magic.default", new ModelLocomotiveSteamMagic()));
 //        LocomotiveRenderType.STEAM_SOLID.registerRenderer(new LocomotiveRendererDefault("railcraft:electric", "locomotive.model.electric.default", new ModelLocomotiveElectric()));
 //        LocomotiveRenderType.STEAM_MAGIC.registerRenderer(new LocomotiveRendererDefault("railcraft:default", "locomotive.model.steam.magic.default", new ModelLocomotiveSteamMagic()));
-        LocomotiveRenderType.ELECTRIC.registerRenderer(new LocomotiveRendererElectric());
+        LocomotiveRenderType.DIESEL.registerRenderer(new LocomotiveRendererElectric("railcraft:default", "locomotive.model.diesel.default", new ModelLocomotiveDiesel(), new ModelLocomotiveDiesel(0.125F), new Vec3d(-22, -19, -9)));
+        LocomotiveRenderType.ELECTRIC.registerRenderer(new LocomotiveRendererElectric("railcraft:default", "locomotive.model.electric.default", new ModelLocomotiveElectric(), new ModelLocomotiveElectric(0.125F), new Vec3d(-22, -17, -9)));
 
 //        ItemStack stack = LocomotiveRenderType.STEAM_SOLID.getItemWithRenderer("railcraft:default");
 //        if (stack != null)

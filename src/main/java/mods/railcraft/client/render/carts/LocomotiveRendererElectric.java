@@ -18,6 +18,7 @@ import mods.railcraft.common.core.RailcraftConstants;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
 
@@ -26,12 +27,13 @@ import org.lwjgl.opengl.GL11;
  */
 public class LocomotiveRendererElectric extends LocomotiveRendererDefault {
 
-    private static final ModelBase LAMP = new ModelLamp();
+    private final ModelBase LAMP;
     private final ResourceLocation LAMP_TEX_ON;
     private final ResourceLocation LAMP_TEX_OFF;
 
-    public LocomotiveRendererElectric() {
-        super("railcraft:default", "locomotive.model.electric.default", new ModelLocomotiveElectric(), new ModelLocomotiveElectric(0.125F));
+    public LocomotiveRendererElectric(String rendererTag, String modelTag, ModelBase model, ModelBase snowLayer, Vec3d lampPosition) {
+        super(rendererTag, modelTag, model, snowLayer);
+        LAMP = new ModelLamp(lampPosition);
         LAMP_TEX_ON = new ResourceLocation(RailcraftConstants.LOCOMOTIVE_TEXTURE_FOLDER + modelTag + ".lamp.on.png");
         LAMP_TEX_OFF = new ResourceLocation(RailcraftConstants.LOCOMOTIVE_TEXTURE_FOLDER + modelTag + ".lamp.off.png");
         setEmblemPosition(0.2F, -0.03F, -0.41F, -0.505F);
@@ -63,18 +65,14 @@ public class LocomotiveRendererElectric extends LocomotiveRendererDefault {
     }
 
     private static class ModelLamp extends ModelSimple {
-
-        public ModelLamp() {
+        public ModelLamp(Vec3d position) {
             super("lamp");
             renderer.setTextureSize(16, 16);
             setTextureOffset("lamp.bulb", 1, 1);
-            renderer.addBox("bulb", -22F, -17F, -9F, 1, 2, 2);
+            renderer.addBox("bulb", (float)position.x, (float)position.y, (float)position.z, 1, 2, 2);
             renderer.rotationPointX = 8F;
             renderer.rotationPointY = 8F;
             renderer.rotationPointZ = 8F;
-
         }
-
     }
-
 }

@@ -113,7 +113,12 @@ public enum RailcraftCarts implements IRailcraftCartContainer {
 //            conditions().add(ModuleLocomotives.class);
 //            conditions().add(ModuleThaumcraft.class);
 //        }
-//    },
+    //    },
+    LOCO_DIESEL(1, "locomotive_diesel", EntityLocomotiveDiesel.class, EntityLocomotiveDiesel::new, ItemLocoDiesel::new) {
+        {
+            conditions().add(ModuleLocomotives.class);
+        }
+    },
     LOCO_ELECTRIC(1, "locomotive_electric", EntityLocomotiveElectric.class, EntityLocomotiveElectric::new, ItemLocoElectric::new) {
         {
             conditions().add(ModuleLocomotives.class);

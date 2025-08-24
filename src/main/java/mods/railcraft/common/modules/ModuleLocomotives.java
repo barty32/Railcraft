@@ -35,6 +35,7 @@ public class ModuleLocomotives extends RailcraftModulePayload {
                 TrackKits.LOCOMOTIVE,
                 TrackKits.THROTTLE,
                 RailcraftCarts.LOCO_STEAM_SOLID,
+                RailcraftCarts.LOCO_DIESEL,
                 RailcraftCarts.LOCO_ELECTRIC,
                 RailcraftCarts.LOCO_CREATIVE
         );
@@ -55,6 +56,7 @@ public class ModuleLocomotives extends RailcraftModulePayload {
                 ToIntFunction<Entity> lightCalculator = entity -> (entity == null || entity.isDead
                         || !(entity instanceof EntityLocomotive) || ((EntityLocomotive) entity).isShutdown()) ? 0 : lightLevel;
                 plugin.registerEntityLightSource(EntityLocomotiveSteamSolid.class, lightCalculator);
+                plugin.registerEntityLightSource(EntityLocomotiveDiesel.class, lightCalculator);
                 plugin.registerEntityLightSource(EntityLocomotiveElectric.class, lightCalculator);
                 plugin.registerEntityLightSource(EntityLocomotiveCreative.class, lightCalculator);
             }
@@ -70,6 +72,8 @@ public class ModuleLocomotives extends RailcraftModulePayload {
         public final float steamLocomotiveEfficiency;
         public final boolean locomotiveDamageMobs;
         public final int locomotiveHorsepower;
+        public final int dieselLocomotiveTankCapacity;
+        public final float dieselMotorConsumptionMultiplier;
 
         public Config(Configuration config) {
             steamLocomotiveEfficiency = config.getFloat("steamLocomotiveEfficiency", CAT_CONFIG,
@@ -82,6 +86,13 @@ public class ModuleLocomotives extends RailcraftModulePayload {
                     "controls how much power locomotives have and how many carts they can pull\n"
                             + "be warned, longer trains have a greater chance for glitches\n"
                             + "as such it HIGHLY recommended you do not change this");
+
+            dieselLocomotiveTankCapacity = config.getInt("dieselLocomotiveTankCapacity", CAT_CONFIG, 16, 0, 32768,
+                    "change this to the number of buckets (1000 mb) to set diesel locomotive tank size");
+
+            dieselMotorConsumptionMultiplier = config.getFloat("dieselMotorConsumptionMultiplier", CAT_CONFIG, 1.0F, 0.0F, 1000.0F,
+                    "adjust diesel consumption of diesel locomotives\n"
+                            + "by default it consumes 1-2 buckets per km depending on speed");
         }
     }
 }

@@ -436,7 +436,7 @@ public abstract class EntityLocomotive extends CartBase implements IDirectionalC
 
         LocoSpeed speed = getSpeed();
         if (isRunning()) {
-            float force = ModuleLocomotives.config.locomotiveHorsepower * 0.01F;
+            double force = getHorsepower() * 0.01F;
             if (isReverse())
                 force = -force;
             switch (speed) {
@@ -591,6 +591,10 @@ public abstract class EntityLocomotive extends CartBase implements IDirectionalC
 
     public double getDrag() {
         return DRAG_FACTOR;
+    }
+
+    public double getHorsepower() {
+        return ModuleLocomotives.config.locomotiveHorsepower;
     }
 
     @Override
