@@ -3,8 +3,7 @@ import net.minecraftforge.gradle.tasks.SignJar
 
 buildscript {
     repositories {
-        jcenter()
-        mavenCentral()
+        //jcenter()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
@@ -13,6 +12,7 @@ buildscript {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
+        mavenCentral()
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
