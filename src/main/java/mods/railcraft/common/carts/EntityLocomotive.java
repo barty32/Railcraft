@@ -94,7 +94,7 @@ public abstract class EntityLocomotive extends CartBase implements IDirectionalC
     private static final DataParameter<String> DEST = DataManagerPlugin.create(DataSerializers.STRING);
     private static final double DRAG_FACTOR = 0.9;
     private static final float HS_FORCE_BONUS = 3.5F;
-    private static final byte FUEL_USE_INTERVAL = 8;
+    private static final byte FUEL_USE_INTERVAL = 10;
     private static final byte KNOCKBACK = 1;
     private static final int WHISTLE_INTERVAL = 256;
     private static final int WHISTLE_DELAY = 160;
@@ -469,8 +469,13 @@ public abstract class EntityLocomotive extends CartBase implements IDirectionalC
         }
     }
 
-    private int getFuelUse() {
-        if (isRunning()) {
+    protected int getFuelUse() {
+        Train train = Train.getExisting(this).orElse(null);
+        if (isIdle() || train != null && train.isTrainLockedDown())
+            return getIdleFuelUse();
+        else if (isRunning()) {
+            if(HighSpeedTools.isTravellingHighSpeed(this))
+                return 12;
             LocoSpeed speed = getSpeed();
             switch (speed) {
                 case SLOWEST:
@@ -482,8 +487,7 @@ public abstract class EntityLocomotive extends CartBase implements IDirectionalC
                 default:
                     return 8;
             }
-        } else if (isIdle())
-            return getIdleFuelUse();
+        }
         return 0;
     }
 
@@ -497,7 +501,7 @@ public abstract class EntityLocomotive extends CartBase implements IDirectionalC
             if (fuel < 0)
                 fuel = 0;
         }
-        while (fuel <= FUEL_USE_INTERVAL && !isShutdown()) {
+        while (fuel <= getFuelUse() && !isShutdown()) {
             int newFuel = getMoreGoJuice();
             if (newFuel <= 0)
                 break;
